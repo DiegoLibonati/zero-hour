@@ -6,15 +6,6 @@ This project was created primarily for **educational and learning purposes**.
 While it is well-structured and could technically be used in production, it is **not intended for commercialization**.  
 The main goal is to explore and demonstrate best practices, patterns, and technologies in software development.
 
-## Getting Started
-
-1. Clone the repository
-2. Navigate to the project folder
-3. Execute: `npm install`
-4. Execute: `npm run dev`
-
-The application will open automatically at `http://localhost:3000`
-
 ## Description
 
 **Zero Hour** is a lightweight, zero-dependency countdown web application built with vanilla TypeScript and TailwindCSS. It displays a real-time countdown timer that ticks every second toward a target date and time, making it ideal for embedding in product launch pages, giveaway campaigns, game release announcements, or any scenario where building anticipation matters.
@@ -32,6 +23,8 @@ Under the hood, the app uses a generic reactive `Store<T>` class for state manag
 5. Vite
 
 ## Libraries used
+
+The project relies exclusively on development tooling — there are no runtime dependencies shipped to the browser.
 
 #### Dependencies
 
@@ -66,11 +59,20 @@ No production dependencies - Pure Vanilla TypeScript
 "vite": "^7.1.5"
 ```
 
-## Portfolio Link
+## Getting Started
 
-[`https://www.diegolibonati.com.ar/#/project/zero-hour`](https://www.diegolibonati.com.ar/#/project/zero-hour)
+Follow these steps to run the project locally:
+
+1. Clone the repository
+2. Navigate to the project folder
+3. Execute: `npm install`
+4. Execute: `npm run dev`
+
+The application will open automatically at `http://localhost:3000`
 
 ## Testing
+
+Once the project is installed, you can run the full test suite to verify everything works as expected:
 
 1. Navigate to the project folder
 2. Execute: `npm test`
@@ -81,7 +83,9 @@ For coverage report:
 npm run test:coverage
 ```
 
-## Security
+## Security Audit
+
+Beyond functional tests, you should also check the dependency tree for known vulnerabilities.
 
 ### npm audit
 
@@ -94,3 +98,7 @@ npm audit
 ## Known Issues
 
 None at the moment.
+
+## Portfolio Link
+
+[`https://www.diegolibonati.com.ar/#/project/zero-hour`](https://www.diegolibonati.com.ar/#/project/zero-hour)
