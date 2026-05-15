@@ -9,7 +9,7 @@ import { countdownStore } from "@/stores/countdownStore";
 
 import { formatZero } from "@/helpers/formatZero";
 
-import assets from "@/assets/export";
+import assets from "@/assets/index";
 
 const Card = ({ title }: CardProps): CardComponent => {
   const {

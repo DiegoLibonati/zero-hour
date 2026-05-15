@@ -65,8 +65,9 @@ Follow these steps to run the project locally:
 
 1. Clone the repository
 2. Navigate to the project folder
-3. Execute: `npm install`
-4. Execute: `npm run dev`
+3. Use Node.js 22 (a `.nvmrc` is provided — run `nvm use` if you have nvm)
+4. Execute: `npm install`
+5. Execute: `npm run dev`
 
 The application will open automatically at `http://localhost:3000`
 

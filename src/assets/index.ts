@@ -1,9 +1,7 @@
 import CellPng from "@/assets/images/cell.png";
 
-const assets = {
+export default {
   images: {
     cell: CellPng,
   },
 };
-
-export default assets;

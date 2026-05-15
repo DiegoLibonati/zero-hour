@@ -70,6 +70,16 @@ describe("CountdownStore", () => {
       });
       expect(earlyStore.getLastDateParsed().minutesNumber).toBe("05");
     });
+
+    it("should return an empty string for dayName when getDay returns an out-of-bounds index", () => {
+      jest.spyOn(Date.prototype, "getDay").mockReturnValue(99);
+      expect(store.getLastDateParsed().dayName).toBe("");
+    });
+
+    it("should return an empty string for monthName when getMonth returns an out-of-bounds index", () => {
+      jest.spyOn(Date.prototype, "getMonth").mockReturnValue(99);
+      expect(store.getLastDateParsed().monthName).toBe("");
+    });
   });
 
   describe("setTimeLeft", () => {

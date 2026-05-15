@@ -116,6 +116,15 @@ describe("Store", () => {
       expect(mockListener2).toHaveBeenCalledWith(7);
     });
 
+    it("should not throw when unsubscribe is called a second time", () => {
+      const mockListener: Listener<number> = jest.fn();
+      const unsubscribe = store.subscribe("count", mockListener);
+      unsubscribe();
+      expect(() => {
+        unsubscribe();
+      }).not.toThrow();
+    });
+
     it("should handle multiple successive updates", () => {
       const mockListener: Listener<number> = jest.fn();
       store.subscribe("count", mockListener);

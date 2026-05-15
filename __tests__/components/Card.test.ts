@@ -121,6 +121,14 @@ describe("Card", () => {
       countdownStore.setState({ timeleft: 0 });
       expect(screen.queryByText("Days")).not.toBeInTheDocument();
     });
+
+    it("should clear the active interval when timeleft changes to zero", () => {
+      const mockClearInterval = jest.spyOn(global, "clearInterval");
+      countdownStore.setState({ intervalGetTimeLeft: 42 });
+      renderComponent();
+      countdownStore.setState({ timeleft: 0 });
+      expect(mockClearInterval).toHaveBeenCalledWith(42);
+    });
   });
 
   describe("cleanup", () => {
