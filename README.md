@@ -84,6 +84,64 @@ For coverage report:
 npm run test:coverage
 ```
 
+## Continuous Integration
+
+The repository ships with a **GitHub Actions** pipeline defined in [`.github/workflows/ci.yml`](.github/workflows/ci.yml). It runs automatically on every `push` and `pull_request` targeting the `main` branch.
+
+### Pipeline overview
+
+```
+                      ┌─── PR or push to main ───┐
+                      ▼                          ▼
+┌──────────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│    lint-and-audit    │─▶│     testing      │─▶│      build       │
+│ eslint · type-check  │  │   jest (jsdom)   │  │   vite build     │
+└──────────────────────┘  └──────────────────┘  └──────────────────┘
+```
+
+### Validation jobs (run on every PR and push)
+
+1. **`lint-and-audit`** — installs dependencies with `npm ci`, runs `npm run lint` (ESLint) and `npm run type-check` (TypeScript `--noEmit`).
+2. **`testing`** — runs `npm run test`, executing the full Jest suite under `jest-environment-jsdom` with the 70% coverage threshold enforced by `jest.config.js`.
+3. **`build`** — runs `npm run build`, which performs `tsc -b` followed by `vite build` and emits the production bundle to `dist/`. Acts as a smoke test that the project compiles end-to-end.
+
+Every job runs on `ubuntu-latest`, checks out the repo with `actions/checkout@v4.2.2`, sets up Node.js via `actions/setup-node@v4` using the version pinned in [`.nvmrc`](.nvmrc), and caches the npm registry to keep installs fast.
+
+### Job dependencies
+
+Jobs run **sequentially** via the `needs:` keyword: `testing` waits for `lint-and-audit` to succeed, and `build` waits for `testing`. A failure in any earlier stage short-circuits the pipeline and prevents later jobs from running.
+
+### Skipping CI
+
+To push a change to `main` without triggering the workflow (e.g. a typo fix in an unrelated doc), append GitHub's standard `[skip ci]` marker to the commit message:
+
+```bash
+git commit -m "docs: fix typo in README [skip ci]"
+```
+
+### Where the build outputs live
+
+| Output                         | Location                     |
+| ------------------------------ | ---------------------------- |
+| Lint, type-check and test logs | **Actions** tab on GitHub    |
+| Production bundle (`dist/`)    | Ephemeral, inside the runner |
+
+> **Note:** the pipeline does not currently publish artifacts or releases — `npm run build` runs purely as a verification step.
+
+### Running the same checks locally
+
+```bash
+# lint-and-audit
+npm run lint
+npm run type-check
+
+# testing
+npm run test
+
+# build
+npm run build
+```
+
 ## Security Audit
 
 Beyond functional tests, you should also check the dependency tree for known vulnerabilities.
